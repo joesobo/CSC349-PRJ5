@@ -1,3 +1,7 @@
+//DiGraph
+//By Joseph Soboleski (jsoboles@calpoly.edu) and Salman Wajahat (swajahat@calpoly.edu)
+//5/28/19
+
 import java.util.LinkedList;
 
 public class DiGraph{
@@ -7,7 +11,7 @@ public class DiGraph{
     //constructor
     public DiGraph(int N){
         this.N = N;
-        this.graph = new LinkedList<Integer>[N];
+        this.graph = (LinkedList<Integer>[])new LinkedList[N];
         for(int i = 0; i < N; i++){
             this.graph[i] = new LinkedList<Integer>();
         }
@@ -15,7 +19,7 @@ public class DiGraph{
 
     //5 public methods
     //adds to vertex as froms neighbor
-    public addEdge(int from, int to){
+    public void addEdge(int from, int to){
         //check for existance
         LinkedList<Integer> fromVertex = graph[from-1];
         if(!fromVertex.contains((Integer)to-1)){
@@ -24,30 +28,30 @@ public class DiGraph{
     }
 
     //remove to vertex as from neighbor
-    public deleteEdge(int from, int to){
+    public void deleteEdge(int from, int to){
         //check for existance
         LinkedList<Integer> fromVertex = graph[from-1];
         fromVertex.removeFirstOccurrence((Integer)to-1);
     }
 
     //returns number of edges in graph
-    public edgeCount(){
+    public int edgeCount(){
         int edgeCount = 0;
         for(int i = 0; i < graph.length; i++){
-            edges += graph[i].size();
+            edgeCount += graph[i].size();
         }
         return edgeCount;
     }
 
     //returns number of vertices in the graph (array length)
-    public vertexCount(){
+    public int vertexCount(){
         return graph.length;
     }
 
     //output formatted graph
-    public print(){
+    public void print(){
         for(int i = 0; i < vertexCount(); i++){
-            System.out.print((i + 1) + " is connected to : ");
+            System.out.print((i + 1) + " is connected to: ");
             //get linked list
             LinkedList<Integer> vertex = graph[i];
             int adjacent = vertex.size();
@@ -58,9 +62,13 @@ public class DiGraph{
             }
 
             //loop through to N-1
-            for(int v = 0; v < adjacent - 1; v++){
-
+            int v;
+            for(v = 0; v < adjacent - 1; v++){
+                Integer V = vertex.get(v);
+                System.out.print((V.intValue() + 1) + ", ");
             }
+            Integer V = vertex.get(v);
+            System.out.println(V.intValue() + 1);
         }
     }
 }
