@@ -69,12 +69,22 @@ public class DiGraphTest{
                         System.out.println("Shutting Down...");
                         break;
                     case "t":
-                        System.out.print("Topological sort: ");
-                        //int[] ts = graph.topSort();
+                        Integer[] arr = new Integer[graph.vertexCount()];
+                        try{   
+                            graph.topSort().toArray(arr);
+                            System.out.print("Topological sort: ");
+                            int i;
+                            for(i = 0; i < arr.length-1; i++){
+                                System.out.print((arr[i] + 1) + ", ");
+                            }
+                            System.out.println(arr[i] + 1);
+                        }catch(IllegalArgumentException e){
+                            System.out.println("Graph is cyclic.");
+                        }
                         break;
                     default:
-                        scan.nextLine();
-                        System.out.println();
+                        //scan.nextLine();
+                        //System.out.println();
                         System.out.println("Invalid option.");
                         break;
                 }
@@ -90,8 +100,8 @@ public class DiGraphTest{
         System.out.println("- edge count (enter e) ");
         System.out.println("- vertex count (enter v) ");
         System.out.println("- print graph (enter p) ");
+        System.out.println("- topographical sort (enter t) ");
         System.out.println("- Quit (enter q)\n");
-        System.out.println("- topological search (enter t)");
    
     }
 }

@@ -3,6 +3,8 @@
 //5/28/19
 
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.ArrayList;
 
 public class DiGraph{
     private LinkedList<Integer>[] graph;
@@ -71,46 +73,86 @@ public class DiGraph{
             System.out.println(V.intValue() + 1);
         }
     }
-    private int[] indegrees(LinkedList<Integer>[] g) {
-        int indegree[] = new int[g.length];
-        for (int i =0; i < g.length; i++) {
-            indegree[i] = 0;
-        }
-        for (int u = 0; u < g.length; u++) {
-            LinkedList<Integer> temp = g[u];
-            for (int v : temp) {
-                indegree[v]++;
+    private Integer[] indegrees() {
+        int N = graph.length;
+        int indegree[] = new int[N];
+        Integer f[] = new Integer[N];
+
+        for(int v = 0; v < N; v++){
+            LinkedList<Integer> vertex = graph[v];
+            for(Integer i : vertex){
+                indegree[i.intValue()]++;
             }
         }
-        return indegree;
+
+        for(int i = 0; i < N; i++){
+            f[i] = indegree[i];
+        }
+
+        return f;
     }
 
-    public int[] topSort(LinkedList<Integer>[] g) throws IllegalArgumentException {
-        int n = g.length;
-        int IN[] = indegrees(g);
-        int A[] = new int[n];
-        Queue<Integer> Q = new LinkedList<Integer>();
-        for (int u=0; u<n; u++) {
-            if (IN[u] == 0) {
-                Q.add(u);
+    public ArrayList<Integer> topSort() throws IllegalArgumentException {
+        int N = vertexCount();
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        Integer indegrees[] = indegrees();
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        if(graph.length == 0 || graph == null){
+            return new ArrayList<Integer>();
+        }
+
+        for(int i = 0; i < N; i++){
+            if(indegrees[i].intValue() == 0){
+                queue.add(i);
             }
         }
-        int i= 0;
-        while(!Q.isEmpty()) {
-            int u = Q.remove();
-            A[i] = u;
-            i = i+1;
-            LinkedList<Integer> temp = g[u];
-            for ( int v : temp) {
-                IN[v] = IN[v]-1;
-                if(IN[v] == 0) {
-                    Q.add(v);
+
+        while(!queue.isEmpty()){
+            Integer vertex = queue.remove();
+            result.add(vertex);
+
+            LinkedList<Integer> vertexes = graph[vertex];
+            for(Integer edge : vertexes){
+                indegrees[edge] = indegrees[edge] - (Integer)1;
+                if(indegrees[edge] == (Integer)0){
+                    queue.add(edge);
                 }
             }
         }
-        if (i == n+1) {
-            throw new IllegalArgumentException("Graph has a cycle");
+
+        if(result.size() != N){
+            throw new IllegalArgumentException();
         }
-        return A;
+
+        return new ArrayList<Integer>(result);
+
+
+
+        // int IN[] = indegrees(g);
+        // int A[] = new int[n];
+        // Queue<Integer> Q = new LinkedList<Integer>();
+        // for (int u=0; u<n; u++) {
+        //     if (IN[u] == 0) {
+        //         Q.add(u);
+        //     }
+        // }
+        // int i= 0;
+        // while(!Q.isEmpty()) {
+        //     int u = Q.remove();
+        //     A[i] = u;
+        //     i = i+1;
+        //     LinkedList<Integer> temp = g[u];
+        //     for ( int v : temp) {
+        //         IN[v] = IN[v]-1;
+        //         if(IN[v] == 0) {
+        //             Q.add(v);
+        //         }
+        //     }
+        // }
+        // if (i == n+1) {
+        //     throw new IllegalArgumentException("Graph has a cycle");
+        // }
+        // return A;
     }
 }
