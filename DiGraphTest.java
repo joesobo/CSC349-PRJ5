@@ -68,6 +68,10 @@ public class DiGraphTest{
                         finished = true;
                         System.out.println("Shutting Down...");
                         break;
+                    case "t":
+                        System.out.print("Topological sort: ");
+                        //int[] ts = graph.topSort();
+                        break;
                     default:
                         scan.nextLine();
                         System.out.println();
@@ -87,5 +91,7 @@ public class DiGraphTest{
         System.out.println("- vertex count (enter v) ");
         System.out.println("- print graph (enter p) ");
         System.out.println("- Quit (enter q)\n");
+        System.out.println("- topological search (enter t)");
+   
     }
 }
