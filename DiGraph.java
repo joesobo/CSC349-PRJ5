@@ -71,4 +71,46 @@ public class DiGraph{
             System.out.println(V.intValue() + 1);
         }
     }
+    private int[] indegrees(LinkedList<Integer>[] g) {
+        int indegree[] = new int[g.length];
+        for (int i =0; i < g.length; i++) {
+            indegree[i] = 0;
+        }
+        for (int u = 0; u < g.length; u++) {
+            LinkedList<Integer> temp = g[u];
+            for (int v : temp) {
+                indegree[v]++;
+            }
+        }
+        return indegree;
+    }
+
+    public int[] topSort(LinkedList<Integer>[] g) throws IllegalArgumentException {
+        int n = g.length;
+        int IN[] = indegrees(g);
+        int A[] = new int[n];
+        Queue<Integer> Q = new LinkedList<Integer>();
+        for (int u=0; u<n; u++) {
+            if (IN[u] == 0) {
+                Q.add(u);
+            }
+        }
+        int i= 0;
+        while(!Q.isEmpty()) {
+            int u = Q.remove();
+            A[i] = u;
+            i = i+1;
+            LinkedList<Integer> temp = g[u];
+            for ( int v : temp) {
+                IN[v] = IN[v]-1;
+                if(IN[v] == 0) {
+                    Q.add(v);
+                }
+            }
+        }
+        if (i == n+1) {
+            throw new IllegalArgumentException("Graph has a cycle");
+        }
+        return A;
+    }
 }
