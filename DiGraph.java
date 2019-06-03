@@ -19,6 +19,58 @@ public class DiGraph{
         }
     }
 
+    //private nested class
+    private class VertexInfo {
+        private int length;
+        private int predecessor;
+
+        public VertexInfo(int length, int predecessor){
+            this.length = length;
+            this.predecessor = predecessor;
+        }
+    }
+
+    //private nested class
+    private class TreeNode {
+        private int vertexNum;
+        private LinkedList<TreeNode> children;
+
+        public TreeNode(int vertexNum, LinkedList<TreeNode> children){
+            this.vertexNum = vertexNum;
+            this.children = children;
+        }
+    }
+
+    //Breadth first search of graph
+    private VertexInfo[] BFS(int s){
+        LinkedList<Integer> queue = new LinkedList<>();
+    }
+
+    //returns if there is a path between from and to
+    public boolean isTherePath(int from, int to){
+
+    }
+
+    //returns shortest distance between from and to
+    public Integer lengthOfPath(int from, int to){
+
+    }
+
+    //arranges output of shortest path if reachable and prints it out
+    public void printPath(int from, int to){
+
+    }
+
+    //returns root of BFS tree
+    private TreeNode buildTree(int s){
+
+    }
+
+    //prints BFS tree
+    public void printTree(int s){
+
+    }
+
     //5 public methods
     //adds to vertex as froms neighbor
     public void addEdge(int from, int to){
@@ -126,33 +178,5 @@ public class DiGraph{
         }
 
         return new ArrayList<Integer>(result);
-
-
-
-        // int IN[] = indegrees(g);
-        // int A[] = new int[n];
-        // Queue<Integer> Q = new LinkedList<Integer>();
-        // for (int u=0; u<n; u++) {
-        //     if (IN[u] == 0) {
-        //         Q.add(u);
-        //     }
-        // }
-        // int i= 0;
-        // while(!Q.isEmpty()) {
-        //     int u = Q.remove();
-        //     A[i] = u;
-        //     i = i+1;
-        //     LinkedList<Integer> temp = g[u];
-        //     for ( int v : temp) {
-        //         IN[v] = IN[v]-1;
-        //         if(IN[v] == 0) {
-        //             Q.add(v);
-        //         }
-        //     }
-        // }
-        // if (i == n+1) {
-        //     throw new IllegalArgumentException("Graph has a cycle");
-        // }
-        // return A;
     }
 }

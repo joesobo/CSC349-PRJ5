@@ -82,9 +82,44 @@ public class DiGraphTest{
                             System.out.println("Graph is cyclic.");
                         }
                         break;
+                    //TODO
+                    case "i":
+                        System.out.print("Enter two vertices: ");
+                        from = scan.nextInt();
+                        to = scan.nextInt();
+
+                        scan.nextLine();
+                        System.out.println();
+                        break;
+                    //TODO
+                    case "l":
+                        System.out.print("Enter two vertices: ");
+                        from = scan.nextInt();
+                        to = scan.nextInt();
+
+                        scan.nextLine();
+                        System.out.println();
+                        break;
+                    //TODO
+                    case "s":
+                        System.out.print("Enter two vertices: ");
+                        from = scan.nextInt();
+                        to = scan.nextInt();
+
+                        scan.nextLine();
+                        System.out.println();
+                        break;
+                    //TODO
+                    case "b":
+                        System.out.print("Enter source vertex number: ");
+                        source = scan.nextInt();
+
+                        scan.nextLine();
+                        System.out.println();
+                        
+                        graph.printTree(source);
+                        break;
                     default:
-                        //scan.nextLine();
-                        //System.out.println();
                         System.out.println("Invalid option.");
                         break;
                 }
@@ -101,6 +136,10 @@ public class DiGraphTest{
         System.out.println("- vertex count (enter v) ");
         System.out.println("- print graph (enter p) ");
         System.out.println("- topographical sort (enter t) ");
+        System.out.println("- if path exists (enter i) ");
+        System.out.println("- length of shortest path (enter l) ");
+        System.out.println("- print shortest path (enter s) ");
+        System.out.println("- print breadth-first-tree (enter b) ");
         System.out.println("- Quit (enter q)\n");
    
     }
