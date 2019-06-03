@@ -5,6 +5,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class DiGraph{
     private LinkedList<Integer>[] graph;
@@ -45,7 +46,8 @@ public class DiGraph{
     private VertexInfo[] BFS(int s){
         LinkedList<Integer> queue = new LinkedList<>();
         VertexInfo[] bfs = new VertexInfo[N];
-        //ArrayList<VertexInfo> queue = new ArrayList<>();
+
+        //initialize distances and predecessors for all vertices
         for(int i = 1; i <= N; i++){
             bfs[i] = new VertexInfo(Integer.MAX_VALUE, -1);
         }
@@ -73,17 +75,49 @@ public class DiGraph{
 
     //returns if there is a path between from and to
     public boolean isTherePath(int from, int to){
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
 
+        //check if length has been updated
+        if(result.length < Integer.MAX_VALUE){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //returns shortest distance between from and to
     public Integer lengthOfPath(int from, int to){
-
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
+        return result.length;
     }
 
     //arranges output of shortest path if reachable and prints it out
     public void printPath(int from, int to){
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
 
+        Stack<Integer> path = new Stack<Integer>();
+        path.add(to);
+
+        //fill stack with path
+        int cur = result.predecessor;
+        while(cur != -1){
+            VertexInfo parentInfo = bfs[cur];
+            path.add(cur + 1);
+            cur = parentInfo.predecessor;
+        }
+
+        //check for path
+        if(path.isEmpty()){
+            System.out.println("There is no path");
+        }
+
+        while(!path.isEmpty()){
+            System.out.printf("%d ", path.pop());
+        }
+        System.out.print("\n");
     }
 
     //returns root of BFS tree
