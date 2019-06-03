@@ -44,6 +44,31 @@ public class DiGraph{
     //Breadth first search of graph
     private VertexInfo[] BFS(int s){
         LinkedList<Integer> queue = new LinkedList<>();
+        VertexInfo[] bfs = new VertexInfo[N];
+        //ArrayList<VertexInfo> queue = new ArrayList<>();
+        for(int i = 1; i <= N; i++){
+            bfs[i] = new VertexInfo(Integer.MAX_VALUE, -1);
+        }
+        bfs[s] = new VertexInfo(0, -1);
+
+        queue.add(s);
+
+        while(!queue.isEmpty()){
+            Integer current = queue.poll();
+            VertexInfo curInfo = bfs[current];
+
+            //update neighbors
+            LinkedList<Integer> neighbors = graph[current];
+            for(Integer neighbor : neighbors){
+                VertexInfo neighborInfo = bfs[neighbor];
+
+                if(curInfo.length + 1 < neighborInfo.length){
+                    queue.add(neighbor);
+                    bfs[neighbor] = new VertexInfo(curInfo.length + 1, current);
+                }
+            }
+        }
+        return bfs;
     }
 
     //returns if there is a path between from and to
