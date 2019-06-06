@@ -9,7 +9,7 @@ public class DiGraph{
     private LinkedList<Integer>[] graph;
     private int N;
 
-    ArrayList<LinkedList<Integer>> g = new ArrayList<>(Arrays.asList(graph));
+//    ArrayList<LinkedList<Integer>> g = new ArrayList<>(Arrays.asList(graph));
 
     //constructor
     public DiGraph(int N){
@@ -61,7 +61,7 @@ public class DiGraph{
             VertexInfo curInfo = bfs.get(current);
 
             //update neighbors
-            LinkedList<Integer> neighbors = g.get(current);
+            LinkedList<Integer> neighbors = graph[current];
             for(Integer neighbor : neighbors){
                 VertexInfo neighborInfo = bfs.get(neighbor);
 
