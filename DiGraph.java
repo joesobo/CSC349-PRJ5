@@ -143,9 +143,28 @@ public class DiGraph{
 
     //prints BFS tree
     public void printTree(int s){
-
+        System.out.println();
+        System.out.println("Breadth First Tree's source: " + s);
+        TreeNode root = buildTree(s-1);
+        recursivePrint(0, root);
     }
 
+    private void addSpaces(int level)   {
+        for (int i = 0; i < level; i++){
+            System.out.print("     ");
+        }
+    }
+
+    private void recursivePrint(int level, TreeNode t) {
+        addSpaces(level);
+
+        System.out.println(t.vertexNum+1);
+
+        for (TreeNode child : t.children) {
+            recursivePrint(level +1, child);
+        }
+    }
+    
     //5 public methods
     //adds to vertex as froms neighbor
     public void addEdge(int from, int to){
