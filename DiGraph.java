@@ -9,6 +9,8 @@ public class DiGraph{
     private LinkedList<Integer>[] graph;
     private int N;
 
+    ArrayList<LinkedList<Integer>> g = new ArrayList<>(Arrays.asList(graph));
+
     //constructor
     public DiGraph(int N){
         this.N = N;
@@ -41,30 +43,31 @@ public class DiGraph{
     }
 
     //Breadth first search of graph
-    private VertexInfo[] BFS(int s){
+    private ArrayList<VertexInfo> BFS(int s){
         LinkedList<Integer> queue = new LinkedList<>();
-        VertexInfo[] bfs = new VertexInfo[N];
+        VertexInfo[] b = new VertexInfo[N];
+        ArrayList<VertexInfo> bfs = new ArrayList<>(Arrays.asList(b));
 
         //initialize distances and predecessors for all vertices
         for(int i = 1; i <= N; i++){
-            bfs[i] = new VertexInfo(Integer.MAX_VALUE, -1);
+            bfs.add(new VertexInfo(Integer.MAX_VALUE, -1));
         }
-        bfs[s] = new VertexInfo(0, -1);
+        bfs.set(s,new VertexInfo(0, -1));
 
         queue.add(s);
 
         while(!queue.isEmpty()){
             Integer current = queue.poll();
-            VertexInfo curInfo = bfs[current];
+            VertexInfo curInfo = bfs.get(current);
 
             //update neighbors
-            LinkedList<Integer> neighbors = graph[current];
+            LinkedList<Integer> neighbors = g.get(current);
             for(Integer neighbor : neighbors){
-                VertexInfo neighborInfo = bfs[neighbor];
+                VertexInfo neighborInfo = bfs.get(neighbor);
 
                 if(curInfo.length + 1 < neighborInfo.length){
                     queue.add(neighbor);
-                    bfs[neighbor] = new VertexInfo(curInfo.length + 1, current);
+                    bfs.set(neighbor, new VertexInfo(curInfo.length + 1, current));
                 }
             }
         }
@@ -73,8 +76,8 @@ public class DiGraph{
 
     //returns if there is a path between from and to
     public boolean isTherePath(int from, int to){
-        VertexInfo[] bfs = BFS(from-1);
-        VertexInfo result = bfs[to-1];
+        ArrayList<VertexInfo> bfs = BFS(from-1);
+        VertexInfo result = bfs.get(to-1);
 
         //check if length has been updated
         if(result.length < Integer.MAX_VALUE){
@@ -86,15 +89,15 @@ public class DiGraph{
 
     //returns shortest distance between from and to
     public Integer lengthOfPath(int from, int to){
-        VertexInfo[] bfs = BFS(from-1);
-        VertexInfo result = bfs[to-1];
+        ArrayList<VertexInfo> bfs = BFS(from-1);
+        VertexInfo result = bfs.get(to-1);
         return result.length;
     }
 
     //arranges output of shortest path if reachable and prints it out
     public void printPath(int from, int to){
-        VertexInfo[] bfs = BFS(from-1);
-        VertexInfo result = bfs[to-1];
+        ArrayList<VertexInfo> bfs = BFS(from-1);
+        VertexInfo result = bfs.get(to-1);
 
         Stack<Integer> path = new Stack<Integer>();
         path.add(to);
@@ -102,7 +105,7 @@ public class DiGraph{
         //fill stack with path
         int cur = result.predecessor;
         while(cur != -1){
-            VertexInfo parentInfo = bfs[cur];
+            VertexInfo parentInfo = bfs.get(cur);
             path.add(cur + 1);
             cur = parentInfo.predecessor;
         }
@@ -127,7 +130,7 @@ public class DiGraph{
             node.vertexNum = vNum;
             nodes[vNum] = node;
         }
-        ArrayList<VertexInfo> b = new ArrayList<>(Arrays.asList(BFS(s)));
+        ArrayList<VertexInfo> b = BFS(s);
         for (VertexInfo info : b) {
             Integer nodeNum = b.indexOf(info);
             Integer parent = info.predecessor;
@@ -164,7 +167,7 @@ public class DiGraph{
             recursivePrint(level +1, child);
         }
     }
-    
+
     //5 public methods
     //adds to vertex as froms neighbor
     public void addEdge(int from, int to){
