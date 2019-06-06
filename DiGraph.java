@@ -2,10 +2,8 @@
 //By Joseph Soboleski (jsoboles@calpoly.edu) and Salman Wajahat (swajahat@calpoly.edu)
 //5/28/19
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.ArrayList;
-import java.util.Stack;
+import javax.swing.tree.TreeNode;
+import java.util.*;
 
 public class DiGraph{
     private LinkedList<Integer>[] graph;
@@ -36,10 +34,10 @@ public class DiGraph{
         private int vertexNum;
         private LinkedList<TreeNode> children;
 
-        public TreeNode(int vertexNum, LinkedList<TreeNode> children){
-            this.vertexNum = vertexNum;
-            this.children = children;
-        }
+//        public TreeNode(int vertexNum, LinkedList<TreeNode> children){
+//            this.vertexNum = vertexNum;
+//            this.children = children;
+//        }
     }
 
     //Breadth first search of graph
@@ -121,8 +119,26 @@ public class DiGraph{
     }
 
     //returns root of BFS tree
-    private TreeNode buildTree(int s){
+    private TreeNode buildTree(int s) {
+        TreeNode[] nodes = new TreeNode[N];
+        for (int vNum = 0; vNum < N; vNum++) {
+            TreeNode node = new TreeNode();
+            node.children = new LinkedList<TreeNode>();
+            node.vertexNum = vNum;
+            nodes[vNum] = node;
+        }
+        ArrayList<VertexInfo> b = new ArrayList<>(Arrays.asList(BFS(s)));
+        for (VertexInfo info : b) {
+            Integer nodeNum = b.indexOf(info);
+            Integer parent = info.predecessor;
 
+            if (parent != -1) {
+                TreeNode pNode = nodes[parent];
+                pNode.children.add(nodes[nodeNum]);
+            }
+
+        }
+        return nodes[s];
     }
 
     //prints BFS tree
