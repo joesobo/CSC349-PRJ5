@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.nio.file.Path;
 import java.util.LinkedList;
 
 public class DiGraphTest{
@@ -90,6 +91,9 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+
+                        boolean path = graph.isTherePath(from, to);
+                        System.out.println("Has path: " + path);
                         break;
                     //TODO
                     case "l":
@@ -99,6 +103,8 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+
+                        System.out.println("Path length: " + graph.lengthOfPath(from, to));
                         break;
                     //TODO
                     case "s":
@@ -108,6 +114,8 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+
+                        graph.printPath(from, to);
                         break;
                     //TODO
                     case "b":

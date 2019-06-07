@@ -46,7 +46,7 @@ public class DiGraph{
         VertexInfo[] bfs = new VertexInfo[N];
 
         //initialize distances and predecessors for all vertices
-        for(int i = 1; i <= N; i++){
+        for(int i = 0; i < N; i++){
             bfs[i] = new VertexInfo(Integer.MAX_VALUE, -1);
         }
         bfs[s] = new VertexInfo(0, -1);
