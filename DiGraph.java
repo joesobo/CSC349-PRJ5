@@ -30,44 +30,39 @@ public class DiGraph{
             this.predecessor = predecessor;
         }
     }
-
     //private nested class
     private class TreeNode {
         private int vertexNum;
         private LinkedList<TreeNode> children;
-
-//        public TreeNode(int vertexNum, LinkedList<TreeNode> children){
-//            this.vertexNum = vertexNum;
-//            this.children = children;
-//        }
+   //         public TreeNode(int vertexNum, LinkedList<TreeNode> children){
+   //         this.vertexNum = vertexNum;
+   //         this.children = children;
+   //     }
     }
-
-    //Breadth first search of graph
-    private ArrayList<VertexInfo> BFS(int s){
+    
+    private VertexInfo[] BFS(int s){
         LinkedList<Integer> queue = new LinkedList<>();
-        VertexInfo[] b = new VertexInfo[N];
-        ArrayList<VertexInfo> bfs = new ArrayList<>(Arrays.asList(b));
-
-        //initialize distances and predecessors for all vertices
-        for(int i = 1; i <= N; i++){
-            bfs.add(new VertexInfo(Integer.MAX_VALUE, -1));
+        VertexInfo[] bfs = new VertexInfo[N];
+        //ArrayList<VertexInfo> queue = new ArrayList<>();
+        for(int i = 0; i < N; i++){
+            bfs[i] = new VertexInfo(Integer.MAX_VALUE, -1);
         }
-        bfs.set(s,new VertexInfo(0, -1));
+        bfs[s] = new VertexInfo(0, -1);
 
         queue.add(s);
 
         while(!queue.isEmpty()){
             Integer current = queue.poll();
-            VertexInfo curInfo = bfs.get(current);
+            VertexInfo curInfo = bfs[current];
 
             //update neighbors
             LinkedList<Integer> neighbors = graph[current];
             for(Integer neighbor : neighbors){
-                VertexInfo neighborInfo = bfs.get(neighbor);
+                VertexInfo neighborInfo = bfs[neighbor];
 
                 if(curInfo.length + 1 < neighborInfo.length){
                     queue.add(neighbor);
-                    bfs.set(neighbor, new VertexInfo(curInfo.length + 1, current));
+                    bfs[neighbor] = new VertexInfo(curInfo.length + 1, current);
                 }
             }
         }
@@ -76,8 +71,8 @@ public class DiGraph{
 
     //returns if there is a path between from and to
     public boolean isTherePath(int from, int to){
-        ArrayList<VertexInfo> bfs = BFS(from-1);
-        VertexInfo result = bfs.get(to-1);
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
 
         //check if length has been updated
         if(result.length < Integer.MAX_VALUE){
@@ -89,15 +84,15 @@ public class DiGraph{
 
     //returns shortest distance between from and to
     public Integer lengthOfPath(int from, int to){
-        ArrayList<VertexInfo> bfs = BFS(from-1);
-        VertexInfo result = bfs.get(to-1);
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
         return result.length;
     }
 
     //arranges output of shortest path if reachable and prints it out
     public void printPath(int from, int to){
-        ArrayList<VertexInfo> bfs = BFS(from-1);
-        VertexInfo result = bfs.get(to-1);
+        VertexInfo[] bfs = BFS(from-1);
+        VertexInfo result = bfs[to-1];
 
         Stack<Integer> path = new Stack<Integer>();
         path.add(to);
@@ -105,7 +100,7 @@ public class DiGraph{
         //fill stack with path
         int cur = result.predecessor;
         while(cur != -1){
-            VertexInfo parentInfo = bfs.get(cur);
+            VertexInfo parentInfo = bfs[cur];
             path.add(cur + 1);
             cur = parentInfo.predecessor;
         }
@@ -126,11 +121,11 @@ public class DiGraph{
         TreeNode[] nodes = new TreeNode[N];
         for (int vNum = 0; vNum < N; vNum++) {
             TreeNode node = new TreeNode();
-            node.children = new LinkedList<TreeNode>();
+            node.children = new LinkedList<>();
             node.vertexNum = vNum;
             nodes[vNum] = node;
         }
-        ArrayList<VertexInfo> b = BFS(s);
+        ArrayList<VertexInfo> b = new ArrayList<>(Arrays.asList(BFS(s)));
         for (VertexInfo info : b) {
             Integer nodeNum = b.indexOf(info);
             Integer parent = info.predecessor;
@@ -139,6 +134,7 @@ public class DiGraph{
                 TreeNode pNode = nodes[parent];
                 pNode.children.add(nodes[nodeNum]);
             }
+
 
         }
         return nodes[s];
