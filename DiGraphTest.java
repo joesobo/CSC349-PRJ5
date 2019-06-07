@@ -70,7 +70,7 @@ public class DiGraphTest{
                         break;
                     case "t":
                         Integer[] arr = new Integer[graph.vertexCount()];
-                        try{   
+                        try{
                             graph.topSort().toArray(arr);
                             System.out.print("Topological sort: ");
                             int i;
@@ -90,6 +90,8 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+                        boolean Path = graph.isTherePath(from,to);
+                        System.out.println("Path: " + Path);
                         break;
                     //TODO
                     case "l":
@@ -99,6 +101,7 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+                        System.out.println("The length of the path is: " + graph.lengthOfPath(from,to));
                         break;
                     //TODO
                     case "s":
@@ -108,6 +111,7 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
+                        graph.printPath(from,to);
                         break;
                     //TODO
                     case "b":
@@ -116,14 +120,14 @@ public class DiGraphTest{
 
                         scan.nextLine();
                         System.out.println();
-                        
+
                         graph.printTree(source);
                         break;
                     default:
                         System.out.println("Invalid option.");
                         break;
                 }
-            }  
+            }
         } while(!finished);
         scan.close();
     }
@@ -141,6 +145,6 @@ public class DiGraphTest{
         System.out.println("- print shortest path (enter s) ");
         System.out.println("- print breadth-first-tree (enter b) ");
         System.out.println("- Quit (enter q)\n");
-   
+
     }
 }
